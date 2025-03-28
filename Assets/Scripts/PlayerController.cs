@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     // prevent double jump
     public bool isOnGround = true;
     public bool gameOver = false;
+    public ParticleSystem explosionParticle;
+    public ParticleSystem dirtParticle;
 
 
     // Start is called before the first frame update
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         playerBody = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
+        //explosionParticle = GameObject.Find("FX_Explosion_Smoke");
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
             playerBody.AddForce(Vector3.up * impulse, ForceMode.Impulse);
             isOnGround = false;
             playerAnim.SetTrigger("Jump_trig");
+            dirtParticle.Stop();
         }
 
         
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+            dirtParticle.Play();
         }
         // If collide with obstacle the character dies
         else if (collision.gameObject.CompareTag("Obstacle"))
@@ -46,6 +51,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("game over");
             playerAnim.SetBool("Death_b", true);
             playerAnim.SetInteger("DeathType_int", 1);
+            explosionParticle.Play();
+            dirtParticle.Stop();
         }
         
     }
