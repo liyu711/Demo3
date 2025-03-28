@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerBody;
-    private float impulse = 5;
+    private float impulse = 10;
     // prevent double jump
     public bool isOnGround = true;
     public bool gameOver = false;
